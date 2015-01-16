@@ -2,8 +2,8 @@ var gulp          = require('gulp'),
     rename        = require('gulp-rename'),
     svgSymbols    = require('gulp-svg-symbols'),
     elixir        = require('laravel-elixir'),
-    notifications = require('laravel-elixir/commands/Notification'),
-    utilities     = require('laravel-elixir/commands/Utilities'),
+    notifications = require('laravel-elixir/ingredients/commands/Notification'),
+    utilities     = require('laravel-elixir/ingredients/commands/Utilities'),
     _             = require('underscore')
 ;
 
