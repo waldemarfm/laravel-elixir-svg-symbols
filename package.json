@@ -7,9 +7,7 @@
     "url": "https://github.com/waldemarfm/laravel-elixir-svg-symbols/issues"
   },
   "dependencies": {
-    "gulp-rename": "^1.2.0",
-    "gulp-svg-symbols": "^0.3.1",
-    "underscore": "^1.7.0"
+    "gulp-svg-sprite": "^1.2.0"
   },
   "homepage": "https://github.com/waldemarfm/laravel-elixir-svg-symbols",
   "keywords": [
@@ -20,6 +18,9 @@
   ],
   "license": "ISC",
   "main": "index.js",
+  "peerDependencies": {
+    "laravel-elixir": "^3.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/waldemarfm/laravel-elixir-svg-symbols.git"

@@ -1,40 +1,52 @@
-var gulp          = require('gulp'),
-    rename        = require('gulp-rename'),
-    svgSymbols    = require('gulp-svg-symbols'),
-    elixir        = require('laravel-elixir'),
-    notifications = require('laravel-elixir/ingredients/commands/Notification'),
-    utilities     = require('laravel-elixir/ingredients/commands/Utilities'),
-    _             = require('underscore')
-;
+var gulp      = require('gulp');
+var svgSprite = require('gulp-svg-sprite');
+var Elixir    = require('laravel-elixir');
 
-elixir.extend('svgSymbols', function(options) {
-    var config = this,
-        defaultOptions = {
-            outputDir: 'public/svg',
-            rename: 'svg-symbols',
-            srcDir: config.assetsDir + 'svg'
+var config    = Elixir.config;
+
+/*
+ |----------------------------------------------------------------
+ | SVG Sprites Task
+ |----------------------------------------------------------------
+ |
+ | This custom task grabs individual SVG files and generates an 
+ | optimized SVG sprite file using `svg-sprite`.
+ |
+ */
+
+Elixir.extend('svgSprite', function(src, output, options) {
+    config.svgSprite = {
+        folder: 'svg',
+        outputFolder: 'svg',
+        pluginOptions: {
+            mode: {
+                symbol: {
+                    dest: '.',
+                    sprite: 'sprite.svg'
+                }
+            }
         }
-    ;
+    };
 
-    options = _.extend(defaultOptions, options);
+    new Elixir.Task('svgSprite', function() {
+        var paths = new Elixir.GulpPaths()
+            .src('**/*.svg', src || config.get('assets.svgSprite.folder'))
+            .output(output || config.get('public.svgSprite.outputFolder'));
 
-    gulp.task('svgSymbols', function() {
+        // Fancy paths log
+        this.log(paths.src, paths.output);
 
-        var onError = function(e) {
-            new notifications().error(e, 'SVG symbols sprite sheet creation failed');
+        // Error handler
+        var errorHandler = function(e) {
+            new Elixir.Notification().error(e, 'SVG sprite failed');
             this.emit('end');
         };
 
-        return gulp.src(options.srcDir + '/**/*.svg')
-            .pipe(svgSymbols(options))
-            .on('error', onError)
-            .pipe(rename({ basename: options.rename }))
-            .pipe(gulp.dest(options.outputDir))
-            .pipe(new notifications().message('SVG symbols sprite sheet created on ' + options.outputDir));
-
-    });
-
-    this.registerWatcher('svgSymbols', options.srcDir + '/**/*.svg');
-
-    return this.queueTask('svgSymbols');
+        return gulp.src(paths.src.path)
+            .pipe(svgSprite(options || config.svgSprite.pluginOptions))
+            .on('error', errorHandler)
+            .pipe(gulp.dest(paths.output.path))
+            .pipe(new Elixir.Notification('SVG sprite generated'))
+    })
+    .watch(config.get('assets.svgSprite.folder') + '/**/*.svg');
 });
