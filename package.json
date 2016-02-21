@@ -18,10 +18,7 @@
   ],
   "license": "ISC",
   "main": "index.js",
-  "peerDependencies": {
-    "laravel-elixir": "^3.0.0"
-  },
-  "repository": {
+    "repository": {
     "type": "git",
     "url": "https://github.com/waldemarfm/laravel-elixir-svg-symbols.git"
   },
