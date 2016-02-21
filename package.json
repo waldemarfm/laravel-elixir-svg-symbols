@@ -1,7 +1,7 @@
 {
   "name": "laravel-elixir-svg-symbols",
   "description": "Laravel Elixir extension for SVG sprites",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Waldemar Figueroa <walde.fm@gmail.com>",
   "bugs": {
     "url": "https://github.com/waldemarfm/laravel-elixir-svg-symbols/issues"
@@ -18,7 +18,7 @@
   ],
   "license": "ISC",
   "main": "index.js",
-    "repository": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/waldemarfm/laravel-elixir-svg-symbols.git"
   },
